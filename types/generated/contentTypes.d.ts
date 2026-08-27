@@ -468,6 +468,7 @@ export interface ApiPrestationPrestation extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     nom: Schema.Attribute.String & Schema.Attribute.Required;
+    pack: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

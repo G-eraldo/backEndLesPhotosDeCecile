@@ -35,6 +35,9 @@
       "type": "component",
       "component": "prestation.formule",
       "repeatable": true
+    },
+    "pack": {
+      "type": "text"
     }
   }
 }
