@@ -459,7 +459,6 @@ export interface ApiPrestationPrestation extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
-    duree: Schema.Attribute.String & Schema.Attribute.Required;
     Formule: Schema.Attribute.Component<'prestation.formule', true>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -469,7 +468,6 @@ export interface ApiPrestationPrestation extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     nom: Schema.Attribute.String & Schema.Attribute.Required;
-    prix_a_partir: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

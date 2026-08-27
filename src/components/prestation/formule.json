@@ -17,13 +17,21 @@
       "type": "integer",
       "required": true
     },
+    "duree": {
+      "type": "string",
+      "required": true
+    },
+    "details": {
+      "type": "text",
+      "required": false
+    },
     "ordre": {
       "type": "integer",
       "required": true
     },
     "acompte_pourcentage": {
       "type": "decimal",
-      "required": true,
+      "required": false,
       "default": 30
     }
   },

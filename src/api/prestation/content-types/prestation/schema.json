@@ -19,14 +19,6 @@
       "type": "text",
       "required": true
     },
-    "prix_a_partir": {
-      "type": "decimal",
-      "required": true
-    },
-    "duree": {
-      "type": "string",
-      "required": true
-    },
     "image": {
       "type": "media",
       "multiple": false,

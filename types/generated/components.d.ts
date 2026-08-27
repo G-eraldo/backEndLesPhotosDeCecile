@@ -7,8 +7,9 @@ export interface PrestationFormule extends Struct.ComponentSchema {
   };
   attributes: {
     acompte_pourcentage: Schema.Attribute.Decimal &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<30>;
+    details: Schema.Attribute.Text;
+    duree: Schema.Attribute.String & Schema.Attribute.Required;
     nom: Schema.Attribute.String & Schema.Attribute.Required;
     nombre_photos: Schema.Attribute.Integer & Schema.Attribute.Required;
     ordre: Schema.Attribute.Integer & Schema.Attribute.Required;
