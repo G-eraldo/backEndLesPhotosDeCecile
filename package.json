@@ -18,14 +18,17 @@
     "@strapi/database": "5.52.2",
     "@strapi/plugin-cloud": "5.52.2",
     "@strapi/plugin-users-permissions": "5.52.2",
+    "@strapi/provider-upload-cloudinary": "^5.52.2",
     "@strapi/strapi": "5.52.2",
     "better-sqlite3": "12.8.0",
+    "dotenv": "^17.4.2",
+    "pg": "^8.23.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.30.3",
+    "strapi-provider-email-resend": "^1.0.4",
     "styled-components": "^6.0.0"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=20.0.0 <=26.x.x",
     "npm": ">=6.0.0"
@@ -33,5 +36,13 @@
   "strapi": {
     "uuid": "eb140f02-3502-4959-ad48-e304d438d51a",
     "installId": "5e1464933e3c73abfabc47385fed96128c38769c2b1c0cec02e5e1df512019fd"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.8.0": true,
+    "@swc/core@1.16.1": true,
+    "core-js-pure@3.50.0": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.21.5": true,
+    "fsevents@2.3.3": true
   }
 }

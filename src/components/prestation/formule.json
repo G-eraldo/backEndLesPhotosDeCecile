@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_prestation_formules",
+  "info": {
+    "displayName": "Formule"
+  },
+  "options": {},
+  "attributes": {
+    "nom": {
+      "type": "string",
+      "required": true
+    },
+    "prix": {
+      "type": "decimal",
+      "required": true
+    },
+    "nombre_photos": {
+      "type": "integer",
+      "required": true
+    },
+    "ordre": {
+      "type": "integer",
+      "required": true
+    },
+    "acompte_pourcentage": {
+      "type": "decimal",
+      "required": true,
+      "default": 30
+    }
+  },
+  "config": {}
+}
