@@ -38,6 +38,10 @@
     },
     "pack": {
       "type": "text"
+    },
+    "ordre": {
+      "type": "integer",
+      "required": true
     }
   }
 }
