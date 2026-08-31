@@ -17,10 +17,22 @@ export interface PrestationFormule extends Struct.ComponentSchema {
   };
 }
 
+export interface ProduitCaracteristique extends Struct.ComponentSchema {
+  collectionName: 'components_produit_caracteristiques';
+  info: {
+    displayName: 'Caract\u00E9ristique';
+  };
+  attributes: {
+    ordre: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    texte: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
       'prestation.formule': PrestationFormule;
+      'produit.caracteristique': ProduitCaracteristique;
     }
   }
 }

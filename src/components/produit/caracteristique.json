@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_produit_caracteristiques",
+  "info": {
+    "displayName": "Caractéristique"
+  },
+  "options": {},
+  "attributes": {
+    "texte": {
+      "type": "string",
+      "required": true
+    },
+    "ordre": {
+      "type": "integer",
+      "default": 0
+    }
+  },
+  "config": {}
+}
