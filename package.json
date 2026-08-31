@@ -19,7 +19,6 @@
     "@strapi/plugin-cloud": "5.52.2",
     "@strapi/plugin-users-permissions": "5.52.2",
     "@strapi/provider-upload-aws-s3": "^5.52.2",
-    "@strapi/provider-upload-cloudinary": "^5.52.2",
     "@strapi/strapi": "5.52.2",
     "better-sqlite3": "12.8.0",
     "dotenv": "^17.4.2",
