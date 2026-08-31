@@ -520,6 +520,46 @@ export interface ApiProduitProduit extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiReservationReservation extends Struct.CollectionTypeSchema {
+  collectionName: 'reservations';
+  info: {
+    displayName: 'R\u00E9servation';
+    pluralName: 'reservations';
+    singularName: 'reservation';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    details: Schema.Attribute.JSON & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::reservation.reservation'
+    > &
+      Schema.Attribute.Private;
+    mollie_payment_id: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    montant_acompte: Schema.Attribute.Float & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    reference: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    statut: Schema.Attribute.Enumeration<
+      ['en_attente', 'paye', 'echoue', 'expire', 'annule']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'en_attente'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1033,6 +1073,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::prestation.prestation': ApiPrestationPrestation;
       'api::produit.produit': ApiProduitProduit;
+      'api::reservation.reservation': ApiReservationReservation;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reservations",
+  "info": {
+    "singularName": "reservation",
+    "pluralName": "reservations",
+    "displayName": "Réservation"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "reference": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "details": {
+      "type": "json",
+      "required": true
+    },
+    "montant_acompte": {
+      "type": "float",
+      "required": true
+    },
+    "mollie_payment_id": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "statut": {
+      "type": "enumeration",
+      "required": true,
+      "default": "en_attente",
+      "enum": [
+        "en_attente",
+        "paye",
+        "echoue",
+        "expire",
+        "annule"
+      ]
+    }
+  }
+}
