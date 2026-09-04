@@ -2,6 +2,7 @@ import {
   default as AuthLogo,
   default as MenuLogo,
 } from "../extensions/logo.svg";
+import PrivateOrderPhotoLink from "./components/PrivateOrderPhotoLink";
 
 const config = {
   locales: ["fr"],
@@ -100,7 +101,14 @@ const config = {
   },
 };
 
-const bootstrap = () => {
+const bootstrap = (app) => {
+  app
+    .getPlugin("content-manager")
+    .injectComponent("editView", "right-links", {
+      name: "private-order-photo-link",
+      Component: PrivateOrderPhotoLink,
+    });
+
   const applyStyles = () => {
     const nav = document.querySelector("nav");
 
