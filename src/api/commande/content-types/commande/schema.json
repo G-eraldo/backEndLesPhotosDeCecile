@@ -22,11 +22,9 @@
       "default": "en_attente",
       "enum": ["en_attente", "paye", "echoue", "expire", "annule"]
     },
-    "photo": {
-      "type": "media",
-      "multiple": true,
-      "required": true,
-      "allowedTypes": ["images"]
+    "photo_privee": {
+      "type": "json",
+      "required": true
     }
   }
 }
