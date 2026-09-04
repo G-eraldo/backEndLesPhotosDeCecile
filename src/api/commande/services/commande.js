@@ -56,7 +56,7 @@ module.exports = createCoreService('api::commande.commande', ({ strapi }) => ({
       fields: ['photo_privee'],
     });
     const key = order?.photo_privee?.key;
-    if (!key || !/^commandes\/pending\/[a-f0-9-]{36}\.[a-z0-9]{1,12}$/.test(key)) return null;
+    if (!key || !/^commandes\/(?:pending|payees\/c[a-f0-9]{32})\/[a-f0-9-]{36}\.[a-z0-9]{1,12}$/.test(key)) return null;
     return createDownloadUrl(key);
   },
 }));
