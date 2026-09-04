@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commandes",
+  "info": {
+    "singularName": "commande",
+    "pluralName": "commandes",
+    "displayName": "Commande",
+    "description": "Commandes de tirages photo réglées via Mollie"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "reference": { "type": "string", "required": true, "unique": true },
+    "details": { "type": "json", "required": true },
+    "montant_total": { "type": "decimal", "required": true },
+    "mollie_payment_id": { "type": "string", "required": true, "unique": true },
+    "statut": {
+      "type": "enumeration",
+      "required": true,
+      "default": "en_attente",
+      "enum": ["en_attente", "paye", "echoue", "expire", "annule"]
+    },
+    "photo": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": ["images"]
+    }
+  }
+}
