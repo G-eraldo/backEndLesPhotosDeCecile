@@ -1,3 +1,9 @@
+const allowedOrigins = [
+  process.env.FRONTEND_URL || "https://photodececile.lafabriqueducode.fr",
+  process.env.FRONTEND_PREVIEW_URL,
+  "http://localhost:3000",
+].filter(Boolean);
+
 module.exports = [
   "strapi::logger",
   "strapi::errors",
@@ -21,7 +27,15 @@ module.exports = [
       },
     },
   },
-  "strapi::cors",
+  {
+    name: "strapi::cors",
+    config: {
+      origin: allowedOrigins,
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+      headers: ["Content-Type", "Authorization", "Origin", "Accept"],
+    },
+  },
   "strapi::poweredBy",
   "strapi::query",
   "strapi::body",
