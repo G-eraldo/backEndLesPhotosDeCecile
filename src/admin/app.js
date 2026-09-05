@@ -1,7 +1,7 @@
 import {
   default as AuthLogo,
   default as MenuLogo,
-} from "../extensions/logo.svg";
+} from "../extensions/logo.png";
 import PrivateOrderPhotoLink from "./components/PrivateOrderPhotoLink";
 
 const config = {
