@@ -31,6 +31,20 @@
       "type": "decimal",
       "required": true
     },
+    "tarifs_formats": {
+      "type": "json",
+      "description": "Liste des tarifs par format : [{ format: '10 × 15 cm', prix: 3 }]"
+    },
+    "supplement_bords_franges": {
+      "type": "decimal",
+      "default": 1,
+      "description": "Supplément appliqué pour une finition à bords frangés"
+    },
+    "supplement_courrier": {
+      "type": "decimal",
+      "default": 5,
+      "description": "Supplément appliqué pour l’envoi postal"
+    },
     "image": {
       "type": "media",
       "multiple": false,
