@@ -29,7 +29,10 @@ module.exports = {
             ctx.body = { data: { url } };
           },
           config: {
-            policies: ['admin::isAuthenticatedAdmin'],
+            policies: [
+              'admin::isAuthenticatedAdmin',
+              { name: 'admin::hasPermissions', config: { actions: [{ action: 'plugin::content-manager.explorer.read', subject: 'api::commande.commande' }] } },
+            ],
           },
         },
       ],
