@@ -14,6 +14,12 @@
   "attributes": {
     "reference": { "type": "string", "required": true, "unique": true },
     "details": { "type": "json", "required": true },
+    "type_commande": {
+      "type": "enumeration",
+      "required": true,
+      "default": "tirage",
+      "enum": ["bon_cadeau", "tirage"]
+    },
     "montant_total": { "type": "decimal", "required": true },
     "mollie_payment_id": { "type": "string", "required": true, "unique": true },
     "statut": {

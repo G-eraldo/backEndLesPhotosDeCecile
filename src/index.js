@@ -46,5 +46,32 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/*{ strapi }*/) {},
+  async bootstrap({ strapi }) {
+    const commandes = strapi.documents('api::commande.commande');
+    let corrected = 0;
+
+    for (let start = 0; ; start += 100) {
+      const orders = await commandes.findMany({
+        fields: ['details', 'type_commande'],
+        sort: ['id:asc'],
+        start,
+        limit: 100,
+      });
+
+      for (const order of orders) {
+        const typeCommande = order.details?.type === 'bon_cadeau' ? 'bon_cadeau' : 'tirage';
+        if (order.type_commande === typeCommande) continue;
+
+        await commandes.update({
+          documentId: order.documentId,
+          data: { type_commande: typeCommande },
+        });
+        corrected += 1;
+      }
+
+      if (orders.length < 100) break;
+    }
+
+    if (corrected) strapi.log.info(`${corrected} commande(s) existante(s) classée(s) par type.`);
+  },
 };
