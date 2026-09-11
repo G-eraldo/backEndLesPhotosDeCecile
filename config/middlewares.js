@@ -1,7 +1,7 @@
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "https://photodececile.lafabriqueducode.fr",
+  process.env.FRONTEND_URL,
   process.env.FRONTEND_PREVIEW_URL,
-  "http://localhost:3000",
+  ...(process.env.NODE_ENV !== "production" ? ["http://localhost:3000"] : []),
 ].filter(Boolean);
 
 module.exports = [
@@ -36,7 +36,10 @@ module.exports = [
       headers: ["Content-Type", "Authorization", "Origin", "Accept"],
     },
   },
-  "strapi::poweredBy",
+  {
+    name: "strapi::poweredBy",
+    config: { poweredBy: false },
+  },
   "strapi::query",
   "strapi::body",
   "strapi::session",

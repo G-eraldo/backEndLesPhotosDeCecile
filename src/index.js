@@ -73,5 +73,29 @@ module.exports = {
     }
 
     if (corrected) strapi.log.info(`${corrected} commande(s) existante(s) classée(s) par type.`);
+
+    const publicRole = await strapi.db
+      .query('plugin::users-permissions.role')
+      .findOne({ where: { type: 'public' } });
+    if (!publicRole) return;
+
+    const deniedPrefixes = [
+      'api::commande.commande',
+      'api::reservation.reservation',
+      'api::payment-operation.payment-operation',
+      'plugin::upload',
+    ];
+    const permissions = await strapi.db
+      .query('plugin::users-permissions.permission')
+      .findMany({ where: { role: publicRole.id } });
+
+    for (const permission of permissions) {
+      if (!permission.enabled) continue;
+      if (!deniedPrefixes.some((prefix) => permission.action.startsWith(prefix))) continue;
+      await strapi.db.query('plugin::users-permissions.permission').update({
+        where: { id: permission.id },
+        data: { enabled: false },
+      });
+    }
   },
 };
