@@ -21,12 +21,12 @@ module.exports = {
             const { documentId } = ctx.params;
             if (!documentId) return ctx.badRequest('Identifiant de commande manquant.');
 
-            const url = await strapi
+            const urls = await strapi
               .service('api::commande.commande')
-              .getPrivatePhotoUrl(documentId);
-            if (!url) return ctx.notFound('Photo privée introuvable.');
+              .getPrivatePhotoUrls(documentId);
+            if (!urls.length) return ctx.notFound('Photo privée introuvable.');
 
-            ctx.body = { data: { url } };
+            ctx.body = { data: { urls } };
           },
           config: {
             policies: [

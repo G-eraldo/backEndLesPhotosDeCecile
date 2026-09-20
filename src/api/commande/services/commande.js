@@ -50,16 +50,23 @@ const createDownloadUrl = (key) => {
 };
 
 module.exports = createCoreService('api::commande.commande', ({ strapi }) => ({
-  async getPrivatePhotoUrl(documentId) {
+  async getPrivatePhotoUrls(documentId) {
     const order = await strapi.documents('api::commande.commande').findOne({
       documentId,
       fields: ['photo_privee'],
     });
-    const photo = Array.isArray(order?.photo_privee)
-      ? order.photo_privee[0]
-      : order?.photo_privee;
-    const key = photo?.key;
-    if (!key || !/^commandes\/(?:pending|payees\/c[a-f0-9]{32})\/[a-f0-9-]{36}\.[a-z0-9]{1,12}$/.test(key)) return null;
-    return createDownloadUrl(key);
+    const photos = Array.isArray(order?.photo_privee)
+      ? order.photo_privee
+      : [order?.photo_privee];
+
+    return photos
+      .map((photo) => photo?.key)
+      .filter((key) => key && /^commandes\/(?:pending|payees\/c[a-f0-9]{32})\/[a-f0-9-]{36}\.[a-z0-9]{1,12}$/.test(key))
+      .map(createDownloadUrl);
+  },
+
+  async getPrivatePhotoUrl(documentId) {
+    const [url] = await this.getPrivatePhotoUrls(documentId);
+    return url || null;
   },
 }));

@@ -3,6 +3,14 @@ import { Eye } from '@strapi/icons';
 import { useFetchClient, useNotification } from '@strapi/admin/strapi-admin';
 import { useState } from 'react';
 
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#039;',
+})[character]);
+
 const getDocumentId = () => {
   const segments = window.location.pathname.split('/').filter(Boolean);
   const contentManagerIndex = segments.indexOf('collection-types');
@@ -30,18 +38,23 @@ export default function PrivateOrderPhotoLink() {
     setIsLoading(true);
     try {
       const { data } = await get(`/admin/commandes/${encodeURIComponent(documentId)}/photo`);
-      const url = data?.url || data?.data?.url;
-      if (typeof url !== 'string' || !url.startsWith('https://')) throw new Error('URL privée invalide.');
+      const urls = data?.urls || data?.data?.urls || [data?.url || data?.data?.url];
+      const privateUrls = urls.filter((url) => typeof url === 'string' && url.startsWith('https://'));
+      if (!privateUrls.length) throw new Error('URL privée invalide.');
 
       photoWindow.opener = null;
-      photoWindow.location.replace(url);
+      photoWindow.document.write(`<!doctype html>
+        <html lang="fr"><head><meta charset="utf-8"><title>Photos de la commande</title>
+        <style>body{margin:0;padding:32px;background:#f7f5f3;color:#302a26;font-family:system-ui,sans-serif}h1{max-width:1200px;margin:0 auto 24px;font-size:24px}.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1200px;margin:auto}.photo{margin:0;background:#fff;padding:12px;box-shadow:0 1px 6px #0002}.photo img{display:block;width:100%;height:auto}</style>
+        </head><body><h1>${privateUrls.length} photo${privateUrls.length > 1 ? 's' : ''} de la commande</h1><main class="photos">${privateUrls.map((url, index) => `<figure class="photo"><img src="${escapeHtml(url)}" alt="Photo ${index + 1} de la commande"></figure>`).join('')}</main></body></html>`);
+      photoWindow.document.close();
     } catch {
       photoWindow.close();
-      toggleNotification({ type: 'danger', message: 'Impossible d’ouvrir la photo privée de cette commande.' });
+      toggleNotification({ type: 'danger', message: 'Impossible d’ouvrir les photos privées de cette commande.' });
     } finally {
       setIsLoading(false);
     }
   };
 
-  return <Button startIcon={<Eye />} size="S" fullWidth loading={isLoading} onClick={openPhoto}>Voir la photo</Button>;
+  return <Button startIcon={<Eye />} size="S" fullWidth loading={isLoading} onClick={openPhoto}>Voir les photos</Button>;
 }
