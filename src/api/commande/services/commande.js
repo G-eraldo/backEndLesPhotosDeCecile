@@ -50,19 +50,29 @@ const createDownloadUrl = (key) => {
 };
 
 module.exports = createCoreService('api::commande.commande', ({ strapi }) => ({
-  async getPrivatePhotoUrls(documentId) {
+  async getPrivatePhotos(documentId) {
     const order = await strapi.documents('api::commande.commande').findOne({
       documentId,
-      fields: ['photo_privee'],
+      fields: ['photo_privee', 'details'],
     });
     const photos = Array.isArray(order?.photo_privee)
       ? order.photo_privee
       : [order?.photo_privee];
+    const items = Array.isArray(order?.details?.items) ? order.details.items : [];
 
     return photos
-      .map((photo) => photo?.key)
-      .filter((key) => key && /^commandes\/(?:pending|payees\/c[a-f0-9]{32})\/[a-f0-9-]{36}\.[a-z0-9]{1,12}$/.test(key))
-      .map(createDownloadUrl);
+      .map((photo, index) => ({ photo, item: items[index] }))
+      .filter(({ photo }) => /^commandes\/(?:pending|payees\/c[a-f0-9]{32})\/[a-f0-9-]{36}\.[a-z0-9]{1,12}$/.test(photo?.key || ''))
+      .map(({ photo, item }) => ({
+        url: createDownloadUrl(photo.key),
+        format: typeof item?.format === 'string' ? item.format : order?.details?.format,
+        quantity: Number.isInteger(item?.quantity) ? item.quantity : order?.details?.quantite,
+      }));
+  },
+
+  async getPrivatePhotoUrls(documentId) {
+    const photos = await this.getPrivatePhotos(documentId);
+    return photos.map(({ url }) => url);
   },
 
   async getPrivatePhotoUrl(documentId) {
