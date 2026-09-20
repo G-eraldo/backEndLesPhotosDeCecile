@@ -26,7 +26,35 @@ module.exports = {
               .getPrivatePhotoUrls(documentId);
             if (!urls.length) return ctx.notFound('Photo privée introuvable.');
 
-            ctx.body = { data: { urls } };
+            ctx.body = { data: { count: urls.length } };
+          },
+          config: {
+            policies: [
+              'admin::isAuthenticatedAdmin',
+              { name: 'admin::hasPermissions', config: { actions: [{ action: 'plugin::content-manager.explorer.read', subject: 'api::commande.commande' }] } },
+            ],
+          },
+        },
+        {
+          method: 'GET',
+          path: '/commandes/:documentId/photo/:index',
+          handler: async (ctx) => {
+            const { documentId, index } = ctx.params;
+            const photoIndex = Number(index);
+            if (!documentId || !Number.isInteger(photoIndex) || photoIndex < 0) return ctx.badRequest('Photo privée invalide.');
+
+            const urls = await strapi
+              .service('api::commande.commande')
+              .getPrivatePhotoUrls(documentId);
+            const url = urls[photoIndex];
+            if (!url) return ctx.notFound('Photo privée introuvable.');
+
+            const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+            if (!response.ok) return ctx.throw(502, 'Impossible de charger la photo privée.');
+
+            ctx.set('Cache-Control', 'private, no-store');
+            ctx.type = response.headers.get('content-type') || 'application/octet-stream';
+            ctx.body = Buffer.from(await response.arrayBuffer());
           },
           config: {
             policies: [
