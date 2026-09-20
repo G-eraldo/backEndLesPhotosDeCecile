@@ -31,6 +31,14 @@
     "photo_privee": {
       "type": "json",
       "required": true
+    },
+    "facture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
     }
   }
 }
