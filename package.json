@@ -46,6 +46,48 @@
     "fsevents@2.3.3": true
   },
   "overrides": {
+    "@hono/node-server": "1.19.19",
+    "@strapi/admin": {
+      "zod": "4.6.6"
+    },
+    "@strapi/content-manager": {
+      "zod": "4.6.6"
+    },
+    "@strapi/content-type-builder": {
+      "zod": "4.6.6"
+    },
+    "@strapi/core": {
+      "zod": "4.6.6"
+    },
+    "@strapi/email": {
+      "zod": "4.6.6"
+    },
+    "@strapi/i18n": {
+      "zod": "4.6.6"
+    },
+    "@strapi/openapi": {
+      "zod": "4.6.6"
+    },
+    "@strapi/plugin-users-permissions": {
+      "zod": "4.6.6"
+    },
+    "@strapi/types": {
+      "zod": "4.6.6"
+    },
+    "@strapi/upload": {
+      "zod": "4.6.6"
+    },
+    "@strapi/utils": {
+      "zod": "4.6.6"
+    },
+    "hono": "4.13.19",
+    "koa-body": {
+      "zod": "3.25.76"
+    },
+    "koa-session": {
+      "zod": "3.25.76"
+    },
+    "nodemailer": "10.6.0",
     "qs": "^6.16.0",
     "vite": "^6.4.3"
   }
